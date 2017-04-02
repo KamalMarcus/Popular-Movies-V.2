@@ -39,8 +39,6 @@ public class MainFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-//        adapter.addFragment(new MoviesFragment(Urls.SORT_BY_POPULARITY), "Most Popular");
-//        adapter.addFragment(new MoviesFragment(Urls.SORT_BY_HIGHEST_RATING), "Highest Rated");
 
         MoviesFragment mostPopular = new MoviesFragment();
         Bundle args = new Bundle();

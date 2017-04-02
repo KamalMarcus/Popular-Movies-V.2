@@ -168,14 +168,13 @@ public class MoviesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View rootView = inflater.inflate(R.layout.fragment_movies, container, false);
         moviesRecyclerView = (RecyclerView) rootView.findViewById(R.id.movies_recycler_view);
         moviesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         adapter = new MoviesAdapter(moviesList);
         moviesRecyclerView.setAdapter(adapter);
 
-//        adapter.notifyDataSetChanged();
         return rootView;
     }
 
