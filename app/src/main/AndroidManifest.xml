@@ -10,14 +10,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".View.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MovieDetailsActivity"></activity>
+        <activity android:name=".View.Activities.MovieDetailsActivity"></activity>
+
+        <provider
+            android:name="com.kamal.marcus.popularmoviesv2.Controller.ContentProvider.MovieProvider"
+            android:authorities="com.kamal.marcus.popularmoviesv2"
+            android:exported="false"
+            android:protectionLevel="signature"
+            android:syncable="true"/>
     </application>
 
 </manifest>
