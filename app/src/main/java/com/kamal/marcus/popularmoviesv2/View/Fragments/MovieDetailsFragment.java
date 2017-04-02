@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -188,7 +189,12 @@ public class MovieDetailsFragment extends Fragment {
                                 sendIntent.setAction(Intent.ACTION_SEND);
                                 sendIntent.putExtra(Intent.EXTRA_TEXT, "http://www.youtube.com/watch?v=" +trailersList.get(0).getKey());
                                 sendIntent.setType("text/plain");
-                                startActivity(sendIntent);
+                                if (sendIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                    startActivity(sendIntent);
+                                }
+                                else {
+                                    Toast.makeText(getActivity(),"There is no application handles sharing the trailer !",Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
                     }
@@ -241,5 +247,6 @@ public class MovieDetailsFragment extends Fragment {
         });
         Volley.newRequestQueue(getActivity()).add(trailersRequest);
     }
+
 
 }

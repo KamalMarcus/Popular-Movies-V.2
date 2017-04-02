@@ -7,10 +7,9 @@ import java.util.HashMap;
  */
 
 public class Urls {
-    final public static String MOVIE_DB_API_BASE_URL = "https://api.themoviedb.org/3/discover/movie?";
-    final public static String SORTING_PARAM = "sort_by";
-    final public static String SORT_BY_POPULARITY = "popularity.desc";
-    final public static String SORT_BY_HIGHEST_RATING = "vote_average.desc";
+    final public static String MOVIE_DB_API_BASE_URL = "https://api.themoviedb.org/3/movie/";
+    final public static String SORT_BY_POPULARITY = "popular";
+    final public static String SORT_BY_HIGHEST_RATING = "top_rated";
     final public static String SORT_BY_FAVOURITES="favourites";
     final public static String API_KEY_PARAM = "api_key";
     final public static String NORMAL_POSTER_BASE_URL = "http://image.tmdb.org/t/p/w185";

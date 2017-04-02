@@ -1,9 +1,11 @@
 package com.kamal.marcus.popularmoviesv2.View.Fragments;
 
 
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -55,6 +57,8 @@ public class MoviesFragment extends Fragment {
     private ArrayList<Movie> moviesList;
     private String sortOrder = "";
     private MoviesAdapter adapter;
+    public static int currentVisiblePosition;
+    boolean isChanged = true;
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -66,13 +70,22 @@ public class MoviesFragment extends Fragment {
 
         moviesList = new ArrayList<Movie>();
         if (!getArguments().getString("sortOrder").equals(Urls.SORT_BY_FAVOURITES)) {
-          getMoviesFromAPI();
+            getMoviesFromAPI();
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                moviesRecyclerView.scrollToPosition(currentVisiblePosition);
+                currentVisiblePosition = 0;
+            }
+        }, 200);
+
+        moviesRecyclerView.getLayoutManager().scrollToPosition(currentVisiblePosition);
         if (getArguments().getString("sortOrder").equals(Urls.SORT_BY_FAVOURITES)) {
             moviesList.clear();
             getMoviesFromDatabase();
@@ -81,7 +94,7 @@ public class MoviesFragment extends Fragment {
 
     private void getMoviesFromAPI() {
         sortOrder = getArguments().getString("sortOrder").equals(Urls.SORT_BY_POPULARITY) ? Urls.SORT_BY_POPULARITY : Urls.SORT_BY_HIGHEST_RATING;
-        StringRequest moviesRequest = new StringRequest(Request.Method.POST, Urls.MOVIE_DB_API_BASE_URL, new Response.Listener<String>() {
+        StringRequest moviesRequest = new StringRequest(Request.Method.POST, Urls.MOVIE_DB_API_BASE_URL + sortOrder, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -124,7 +137,6 @@ public class MoviesFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put(Urls.SORTING_PARAM, sortOrder);
                 params.put(Urls.API_KEY_PARAM, Constants.MY_API_KEY);
                 return params;
             }
@@ -150,7 +162,7 @@ public class MoviesFragment extends Fragment {
                     movie.setRating(cursor.getString(cursor.getColumnIndex(MOVIE_RATING)));
                     movie.setVoteCount(cursor.getString(cursor.getColumnIndex(MOVIE_VOTE_AVERAGE)));
                     movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(MOVIE_DATE)));
-                    movie.setGenreIds(new ArrayList<String>(Arrays.asList((cursor.getString(cursor.getColumnIndex(GENRE_IDS))).replace("[","").replace("]","").split(","))));
+                    movie.setGenreIds(new ArrayList<String>(Arrays.asList((cursor.getString(cursor.getColumnIndex(GENRE_IDS))).replace("[", "").replace("]", "").split(","))));
 
                     moviesList.add(movie);
                 }
@@ -178,4 +190,11 @@ public class MoviesFragment extends Fragment {
         return rootView;
     }
 
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        currentVisiblePosition = ((GridLayoutManager) moviesRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+
+    }
 }
