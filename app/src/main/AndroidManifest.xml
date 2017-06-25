@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kamal.marcus.popularmoviesv2">
+    package="com.forever.kimoo.popularmovies">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
-        <activity android:name=".View.Activities.MainActivity"
+        <activity android:name="com.forever.kimoo.popularmovies.View.Activities.MainActivity"
             android:configChanges="orientation|screenSize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,11 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.Activities.MovieDetailsActivity"></activity>
+        <activity android:name="com.forever.kimoo.popularmovies.View.Activities.MovieDetailsActivity"></activity>
 
         <provider
-            android:name="com.kamal.marcus.popularmoviesv2.Controller.ContentProvider.MovieProvider"
-            android:authorities="com.kamal.marcus.popularmoviesv2"
+            android:name="com.forever.kimoo.popularmovies.Controller.ContentProvider.MovieProvider"
+            android:authorities="com.forever.kimoo.popularmovies"
             android:exported="false"
             android:protectionLevel="signature"
             android:syncable="true"/>
